@@ -51,7 +51,7 @@ class UserController extends Controller
             ], 400);
         }
             $new_user = User::create([
-                'name' => $request->full_name,
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'age' => $request->age,
@@ -67,7 +67,7 @@ class UserController extends Controller
                 'status' => true,
                 'data' => $new_user,
                 'message' => 'User successfully created!'
-            ], 200);
+            ], 201);
     }
 
 
@@ -78,10 +78,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return response()->json([
-            'status' => true,
-            'data' => $user
-        ], 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -92,7 +89,6 @@ class UserController extends Controller
         $update_user = User::findOrFail($id);
         $rules = [
             'name' => 'required|string|max:255',
-            'password' => 'required|string|min:6',
             'email' => 'required|email|max:255|unique:users,email,' . $update_user->id,
             'age' => 'required|integer',
             'birthdate' => 'required|date',
@@ -131,6 +127,6 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User successfully eliminated!'
-        ], 200);
+        ], 204);
     }
 }

@@ -14,15 +14,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
-    
+        Route::get('logout', [AuthController::class, 'logout']);
+
         Route::put('users/{id}', [UserController::class, 'update']);
         Route::delete('users/{id}', [UserController::class, 'destroy']);
         Route::post('users', [UserController::class, 'store']);
         Route::get('users/{id}', [UserController::class, 'show']);
         Route::get('users', [UserController::class, 'index']);
+        
+        
     });
-
 });
-
-
-//Route::resource('v1/users', [UserController::class]);
